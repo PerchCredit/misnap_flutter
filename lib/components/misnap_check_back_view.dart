@@ -42,7 +42,7 @@ class _CheckBackViewState extends State<MiSnapCheckBackView> {
                   color: const Color.fromARGB(100, 204, 204, 204),
                 ),
               ),
-              child: isAndroid ? _platformViewLink() : _uiKitView()),
+              child: Container()),
           onTap: () {},
         ),
       ),
