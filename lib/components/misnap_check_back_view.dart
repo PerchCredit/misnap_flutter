@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mi_snap_flutter/misnap_flutter.dart';
 import 'package:misnap_flutter/misnap_config.dart';
 
 class MiSnapCheckBackView extends StatefulWidget {
@@ -9,12 +8,10 @@ class MiSnapCheckBackView extends StatefulWidget {
     Key? key,
     required this.width,
     required this.height,
-    required this.onPlatformViewCreated,
   }) : super(key: key);
 
   final double width;
   final double height;
-  final MiSnapController? Function(int) onPlatformViewCreated;
 
   @override
   State<MiSnapCheckBackView> createState() => _CheckBackViewState();
@@ -23,8 +20,33 @@ class MiSnapCheckBackView extends StatefulWidget {
 class _CheckBackViewState extends State<MiSnapCheckBackView> {
   @override
   Widget build(BuildContext context) {
-    final isAndroid = defaultTargetPlatform == TargetPlatform.android;
-    return isAndroid ? _platformViewLink() : _uiKitView();
+    if (defaultTargetPlatform != TargetPlatform.iOS &&
+        defaultTargetPlatform != TargetPlatform.android) {
+      throw UnsupportedError("Unsupported platform view");
+    }
+    return _photoCheckBackView(defaultTargetPlatform == TargetPlatform.android);
+  }
+
+  Widget _photoCheckBackView(bool isAndroid) {
+    return SizedBox(
+      height: widget.height,
+      width: widget.width,
+      child: Align(
+        alignment: Alignment.center,
+        child: InkWell(
+          child: Container(
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(100, 245, 245, 245),
+                border: Border.all(
+                  width: 1,
+                  color: const Color.fromARGB(100, 204, 204, 204),
+                ),
+              ),
+              child: isAndroid ? _platformViewLink() : _uiKitView()),
+          onTap: () {},
+        ),
+      ),
+    );
   }
 
   Widget _platformViewLink() {
@@ -38,18 +60,13 @@ class _CheckBackViewState extends State<MiSnapCheckBackView> {
       height: widget.height,
       width: widget.width,
       child: Align(
-        alignment: Alignment.centerRight,
+        alignment: Alignment.center,
         child: UiKitView(
-          viewType: MiSnapPluginConfig.CHECK_BACK,
-          onPlatformViewCreated: _createController,
+          viewType: MiSnapPluginConfig.platformViewType,
           creationParams: creationParams,
           creationParamsCodec: const StandardMessageCodec(),
         ),
       ),
     );
-  }
-
-  void _createController(int id) {
-    widget.onPlatformViewCreated(id);
   }
 }
