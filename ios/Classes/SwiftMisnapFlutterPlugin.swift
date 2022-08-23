@@ -15,25 +15,25 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     switch call.method {
-    case "checkBack":
+    case "check-back":
         
         let parameters = NSMutableDictionary.init(dictionary: MiSnapSDKViewController.defaultParametersForCheckBack())
         self.setupMiSnapVC(misnapParams: parameters)
         result("checkBack")
         
-    case "checkFront":
+    case "check-front":
 
         let parameters = NSMutableDictionary.init(dictionary: MiSnapSDKViewController.defaultParametersForCheckFront())
         self.setupMiSnapVC(misnapParams: parameters)
         result("checkFront")
         
-    case "idCardBack":
+    case "id-card-back":
         
         let parameters = NSMutableDictionary.init(dictionary: MiSnapSDKViewController.defaultParametersForIdCardBack())
         self.setupMiSnapVC(misnapParams: parameters)
         result("idCardBack")
         
-    case "idCardFront":
+    case "id-card-front":
         
         let parameters = NSMutableDictionary.init(dictionary: MiSnapSDKViewController.defaultParametersForIdCardFront())
         self.setupMiSnapVC(misnapParams: parameters)

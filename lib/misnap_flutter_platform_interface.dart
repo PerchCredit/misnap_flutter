@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'misnap_flutter_method_channel.dart';
@@ -14,7 +16,7 @@ abstract class MisnapFlutterPlatform extends PlatformInterface {
   ///
   /// Defaults to [MethodChannelMisnapFlutter].
   static MisnapFlutterPlatform get instance => _instance;
-  
+
   /// Platform-specific implementations should set this with their own
   /// platform-specific class that extends [MisnapFlutterPlatform] when
   /// they register themselves.
@@ -25,5 +27,21 @@ abstract class MisnapFlutterPlatform extends PlatformInterface {
 
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<File?> misnapCheckBack() {
+    throw UnimplementedError('misnapCheckBack() has not been implemented.');
+  }
+
+  Future<File?> misnapCheckFront() {
+    throw UnimplementedError('misnapCheckFront() has not been implemented.');
+  }
+
+  Future<File?> misnapIdCardBack() {
+    throw UnimplementedError('misnapIdCardBack() has not been implemented.');
+  }
+
+  Future<File?> misnapIdCardFront() {
+    throw UnimplementedError('misnapIdCardFront() has not been implemented.');
   }
 }

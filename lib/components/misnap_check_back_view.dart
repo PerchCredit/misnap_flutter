@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:misnap_flutter/misnap_config.dart';
+import 'package:misnap_flutter/misnap_flutter.dart';
 
 class MiSnapCheckBackView extends StatefulWidget {
   const MiSnapCheckBackView({
@@ -43,7 +44,9 @@ class _CheckBackViewState extends State<MiSnapCheckBackView> {
                 ),
               ),
               child: Container()),
-          onTap: () {},
+          onTap: () {
+            MisnapFlutter().misnapCheckBack();
+          },
         ),
       ),
     );

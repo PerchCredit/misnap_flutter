@@ -1,15 +1,36 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:misnap_flutter/misnap_flutter.dart';
 import 'package:misnap_flutter/misnap_flutter_platform_interface.dart';
 import 'package:misnap_flutter/misnap_flutter_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-class MockMisnapFlutterPlatform 
+class MockMisnapFlutterPlatform
     with MockPlatformInterfaceMixin
     implements MisnapFlutterPlatform {
-
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
+
+  @override
+  Future<File?> misnapCheckBack() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<File?> misnapCheckFront() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<File?> misnapIdCardBack() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<File?> misnapIdCardFront() {
+    throw UnimplementedError();
+  }
 }
 
 void main() {
@@ -23,7 +44,7 @@ void main() {
     MisnapFlutter misnapFlutterPlugin = MisnapFlutter();
     MockMisnapFlutterPlatform fakePlatform = MockMisnapFlutterPlatform();
     MisnapFlutterPlatform.instance = fakePlatform;
-  
+
     expect(await misnapFlutterPlugin.getPlatformVersion(), '42');
   });
 }
