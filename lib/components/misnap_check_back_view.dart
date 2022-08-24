@@ -1,7 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:misnap_flutter/misnap_config.dart';
 import 'package:misnap_flutter/misnap_flutter.dart';
 
 class MiSnapCheckBackView extends StatefulWidget {
@@ -45,34 +43,10 @@ class _CheckBackViewState extends State<MiSnapCheckBackView> {
               ),
               child: Container()),
           onTap: () {
-            // MisnapFlutter()
-            //     .getPlatformVersion()
-            //     .then((value) => {if (kDebugMode) print(value)});
             MisnapFlutter()
                 .misnapCheckBack()
                 .then((value) => {print('object')});
           },
-        ),
-      ),
-    );
-  }
-
-  Widget _platformViewLink() {
-    // TODO: impl android target
-    return Container();
-  }
-
-  Widget _uiKitView() {
-    final Map<String, dynamic> creationParams = <String, dynamic>{};
-    return SizedBox(
-      height: widget.height,
-      width: widget.width,
-      child: Align(
-        alignment: Alignment.center,
-        child: UiKitView(
-          viewType: MiSnapPluginConfig.platformViewType,
-          creationParams: creationParams,
-          creationParamsCodec: const StandardMessageCodec(),
         ),
       ),
     );

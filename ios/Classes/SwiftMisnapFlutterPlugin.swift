@@ -6,6 +6,7 @@ import MiSnapUX
 public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
     
   private var misnapVC: MiSnapViewController?
+  private var result: FlutterResult?
 
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "misnap_flutter", binaryMessenger: registrar.messenger())
@@ -14,30 +15,32 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    
+    self.result = result
     switch call.method {
     case "check-back":
         
         let configuration = MiSnapConfiguration(for: .checkBack)
         self.setupMiSnapVC(configuration: configuration)
-        result("checkBack")
+        // result("checkBack")
         
     case "check-front":
 
         let configuration = MiSnapConfiguration(for: .checkFront)
         self.setupMiSnapVC(configuration: configuration)
-        result("checkFront")
+        // result("checkFront")
         
     case "id-card-back":
         
         let configuration = MiSnapConfiguration(for: .idBack)
         self.setupMiSnapVC(configuration: configuration)
-        result("idCardBack")
+        // result("idCardBack")
         
     case "id-card-front":
         
         let configuration = MiSnapConfiguration(for: .idFront)
         self.setupMiSnapVC(configuration: configuration)
-        result("idCardFront")
+        // result("idCardFront")
 
     case "getPlatformVersion":
         
@@ -100,7 +103,6 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
             viewController?.present(alert, animated: true, completion: nil)
         }
     }
-
 }
 
 // MARK: MiSnap Delegate methods
@@ -113,6 +115,7 @@ extension SwiftMisnapFlutterPlugin: MiSnapViewControllerDelegate {
 
     public func miSnapSuccess(_ result: MiSnapResult) {
         // Handle successful session results here
+        self.result?(result.image?.jpegData(compressionQuality:0.8))
     }
 
     public func miSnapCancelled(_ result: MiSnapResult) {
