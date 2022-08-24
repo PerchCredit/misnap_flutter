@@ -45,7 +45,12 @@ class _CheckBackViewState extends State<MiSnapCheckBackView> {
               ),
               child: Container()),
           onTap: () {
-            MisnapFlutter().misnapCheckBack();
+            // MisnapFlutter()
+            //     .getPlatformVersion()
+            //     .then((value) => {if (kDebugMode) print(value)});
+            MisnapFlutter()
+                .misnapCheckBack()
+                .then((value) => {print('object')});
           },
         ),
       ),

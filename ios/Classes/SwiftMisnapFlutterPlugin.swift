@@ -5,7 +5,7 @@ import MiSnapUX
 
 public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
     
-    private var misnapVC: MiSnapViewController?
+  private var misnapVC: MiSnapViewController?
 
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "misnap_flutter", binaryMessenger: registrar.messenger())
@@ -38,6 +38,10 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
         let configuration = MiSnapConfiguration(for: .idFront)
         self.setupMiSnapVC(configuration: configuration)
         result("idCardFront")
+
+    case "getPlatformVersion":
+        
+        result("iOS " + UIDevice.current.systemVersion)
 
     default:
         result(nil)
