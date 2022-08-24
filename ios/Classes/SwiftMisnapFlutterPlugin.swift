@@ -1,11 +1,11 @@
 import Flutter
 import UIKit
-import MiSnapSDK
-import MiSnapSDKMibiData
+import MiSnap
+import MiSnapUX
 
 public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
     
-    private var misnapVC: MiSnapSDKViewController?
+    private var misnapVC: MiSnapViewController?
 
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "misnap_flutter", binaryMessenger: registrar.messenger())
@@ -17,26 +17,26 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
     switch call.method {
     case "check-back":
         
-        let parameters = NSMutableDictionary.init(dictionary: MiSnapSDKViewController.defaultParametersForCheckBack())
-        self.setupMiSnapVC(misnapParams: parameters)
+        let configuration = MiSnapConfiguration(for: .checkBack)
+        self.setupMiSnapVC(configuration: configuration)
         result("checkBack")
         
     case "check-front":
 
-        let parameters = NSMutableDictionary.init(dictionary: MiSnapSDKViewController.defaultParametersForCheckFront())
-        self.setupMiSnapVC(misnapParams: parameters)
+        let configuration = MiSnapConfiguration(for: .checkFront)
+        self.setupMiSnapVC(configuration: configuration)
         result("checkFront")
         
     case "id-card-back":
         
-        let parameters = NSMutableDictionary.init(dictionary: MiSnapSDKViewController.defaultParametersForIdCardBack())
-        self.setupMiSnapVC(misnapParams: parameters)
+        let configuration = MiSnapConfiguration(for: .idBack)
+        self.setupMiSnapVC(configuration: configuration)
         result("idCardBack")
         
     case "id-card-front":
         
-        let parameters = NSMutableDictionary.init(dictionary: MiSnapSDKViewController.defaultParametersForIdCardFront())
-        self.setupMiSnapVC(misnapParams: parameters)
+        let configuration = MiSnapConfiguration(for: .idFront)
+        self.setupMiSnapVC(configuration: configuration)
         result("idCardFront")
 
     default:
@@ -44,11 +44,10 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
     }
   }
     
-    private func setupMiSnapVC(misnapParams :NSDictionary) {
-        let misnapVC = MiSnapSDKViewController()
+    private func setupMiSnapVC(configuration :MiSnapConfiguration) {
+        let misnapVC = MiSnapViewController(with: configuration, delegate: self)
         misnapVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         misnapVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-        misnapVC.setupMiSnap(withParams: misnapParams as? [AnyHashable : Any])
 
         let viewController: UIViewController =
             (UIApplication.shared.delegate?.window??.rootViewController)!;
@@ -70,9 +69,7 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
             self.presentAlert(withTitle: "Not Enough Space", message: "Please, delete old/unused files to have at least \(minDiskSpace) MB of free space", viewController: viewController)
             return
         }
-        
-        misnapVC.delegate = self
-        
+                
         self.misnapVC = misnapVC
     }
     
@@ -105,11 +102,21 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
 // MARK: MiSnap Delegate methods
 extension SwiftMisnapFlutterPlugin: MiSnapViewControllerDelegate {
     
-    public func miSnapFinishedReturningEncodedImage(_ encodedImage: String!, originalImage: UIImage!, andResults results: [AnyHashable : Any]!) {
-        
+    // Note, it will only be sent if `MiSnapLicenseStatus` is anything but `.valid`
+    public func miSnapLicenseStatus(_ status: MiSnapLicenseStatus) {
+        // Handle a license status here
     }
-    
-    public func miSnapCancelled(withResults results: [AnyHashable : Any]!) {
-        self.misnapVC?.dismiss(animated: true)
+
+    public func miSnapSuccess(_ result: MiSnapResult) {
+        // Handle successful session results here
     }
+
+    public func miSnapCancelled(_ result: MiSnapResult) {
+        // Handle cancelled session results here
+    }
+
+    public func miSnapException(_ exception: NSException) {
+        // Handle exception that was caught by the SDK here
+    }
+
 }

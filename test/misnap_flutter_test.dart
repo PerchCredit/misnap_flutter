@@ -1,9 +1,9 @@
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:misnap_flutter/misnap_flutter.dart';
-import 'package:misnap_flutter/misnap_flutter_platform_interface.dart';
 import 'package:misnap_flutter/misnap_flutter_method_channel.dart';
+import 'package:misnap_flutter/misnap_flutter_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockMisnapFlutterPlatform
@@ -13,22 +13,22 @@ class MockMisnapFlutterPlatform
   Future<String?> getPlatformVersion() => Future.value('42');
 
   @override
-  Future<File?> misnapCheckBack() {
+  Future<Uint8List?> misnapCheckBack() {
     throw UnimplementedError();
   }
 
   @override
-  Future<File?> misnapCheckFront() {
+  Future<Uint8List?> misnapCheckFront() {
     throw UnimplementedError();
   }
 
   @override
-  Future<File?> misnapIdCardBack() {
+  Future<Uint8List?> misnapIdCardBack() {
     throw UnimplementedError();
   }
 
   @override
-  Future<File?> misnapIdCardFront() {
+  Future<Uint8List?> misnapIdCardFront() {
     throw UnimplementedError();
   }
 }

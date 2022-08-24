@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -19,26 +20,26 @@ class MethodChannelMisnapFlutter extends MisnapFlutterPlatform {
   }
 
   @override
-  Future<File?> misnapCheckBack() async {
-    final image = await methodChannel.invokeMethod<File>('check-back');
+  Future<Uint8List?> misnapCheckBack() async {
+    final image = await methodChannel.invokeMethod<Uint8List>('check-back');
     return image;
   }
 
   @override
-  Future<File?> misnapCheckFront() async {
-    final image = await methodChannel.invokeMethod<File>('check-front');
+  Future<Uint8List?> misnapCheckFront() async {
+    final image = await methodChannel.invokeMethod<Uint8List>('check-front');
     return image;
   }
 
   @override
-  Future<File?> misnapIdCardBack() async {
-    final image = await methodChannel.invokeMethod<File>('id-card-back');
+  Future<Uint8List?> misnapIdCardBack() async {
+    final image = await methodChannel.invokeMethod<Uint8List>('id-card-back');
     return image;
   }
 
   @override
-  Future<File?> misnapIdCardFront() async {
-    final image = await methodChannel.invokeMethod<File>('id-card-front');
+  Future<Uint8List?> misnapIdCardFront() async {
+    final image = await methodChannel.invokeMethod<Uint8List>('id-card-front');
     return image;
   }
 }

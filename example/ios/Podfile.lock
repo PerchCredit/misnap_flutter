@@ -1,11 +1,29 @@
 PODS:
   - Flutter (1.0.0)
+  - MiSnap (5.0.0):
+    - MiSnapLicenseManager (= 5.0.0)
+    - MiSnapMibiData (= 5.0.0)
   - misnap_flutter (0.0.1):
     - Flutter
+    - MiSnap
+    - MiSnapUX
+  - MiSnapAssetManager (5.0.0)
+  - MiSnapLicenseManager (5.0.0)
+  - MiSnapMibiData (5.0.0)
+  - MiSnapUX (5.0.0):
+    - MiSnapAssetManager (= 5.0.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - misnap_flutter (from `.symlinks/plugins/misnap_flutter/ios`)
+
+SPEC REPOS:
+  trunk:
+    - MiSnap
+    - MiSnapAssetManager
+    - MiSnapLicenseManager
+    - MiSnapMibiData
+    - MiSnapUX
 
 EXTERNAL SOURCES:
   Flutter:
@@ -15,7 +33,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  misnap_flutter: f9db57a6560223abfa125a34e51611809ca4d50f
+  MiSnap: 8915cfb803b839c9d5f985bcad298b2359d8024e
+  misnap_flutter: 7c8ac5fbcc56fe590e3c57faeb55ff53de436e5b
+  MiSnapAssetManager: a3650daeea15ce43d36716469537ee0e6cd5b8a2
+  MiSnapLicenseManager: da2ab27970d90e823e37dda909e45784f901aff9
+  MiSnapMibiData: ccf4e9d1bb706c1440aface36c7ca2be9b0ea65f
+  MiSnapUX: cc53ad2492a4480450c6d5fc0a14a9a367abe6c1
 
 PODFILE CHECKSUM: 30517025a2fecca2d72dac25f08abb5b9a8f1a56
 

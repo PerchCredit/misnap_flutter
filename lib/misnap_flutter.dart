@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'misnap_flutter_platform_interface.dart';
 
@@ -12,19 +12,19 @@ class MisnapFlutter {
     return MisnapFlutterPlatform.instance.getPlatformVersion();
   }
 
-  Future<File?> misnapCheckBack() async {
+  Future<Uint8List?> misnapCheckBack() async {
     return MisnapFlutterPlatform.instance.misnapCheckBack();
   }
 
-  Future<File?> misnapCheckFront() async {
+  Future<Uint8List?> misnapCheckFront() async {
     return MisnapFlutterPlatform.instance.misnapCheckFront();
   }
 
-  Future<File?> misnapIdCardBack() async {
+  Future<Uint8List?> misnapIdCardBack() async {
     return MisnapFlutterPlatform.instance.misnapIdCardBack();
   }
 
-  Future<File?> misnapIdCardFront() async {
+  Future<Uint8List?> misnapIdCardFront() async {
     return MisnapFlutterPlatform.instance.misnapIdCardFront();
   }
 }

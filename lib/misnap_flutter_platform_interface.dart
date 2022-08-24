@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -29,19 +29,19 @@ abstract class MisnapFlutterPlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<File?> misnapCheckBack() {
+  Future<Uint8List?> misnapCheckBack() {
     throw UnimplementedError('misnapCheckBack() has not been implemented.');
   }
 
-  Future<File?> misnapCheckFront() {
+  Future<Uint8List?> misnapCheckFront() {
     throw UnimplementedError('misnapCheckFront() has not been implemented.');
   }
 
-  Future<File?> misnapIdCardBack() {
+  Future<Uint8List?> misnapIdCardBack() {
     throw UnimplementedError('misnapIdCardBack() has not been implemented.');
   }
 
-  Future<File?> misnapIdCardFront() {
+  Future<Uint8List?> misnapIdCardFront() {
     throw UnimplementedError('misnapIdCardFront() has not been implemented.');
   }
 }
