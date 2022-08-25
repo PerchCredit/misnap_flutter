@@ -1,11 +1,11 @@
 name: misnap_flutter
 description: A new Flutter plugin project.
-version: 0.0.1
+version: 0.1.0
 homepage: https://getperch.app
 
 environment:
-  sdk: ">=2.17.1 <3.0.0"
-  flutter: ">=2.5.0"
+  sdk: ">=2.17.0 <3.0.0"
+  flutter: ">=3.0.0"
 
 dependencies:
   flutter:
