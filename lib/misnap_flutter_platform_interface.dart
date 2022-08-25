@@ -25,8 +25,8 @@ abstract class MisnapFlutterPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  Future<Uint8List?> loadRandomImage() {
+    throw UnimplementedError('loadRandomImage() has not been implemented.');
   }
 
   Future<Uint8List?> misnapCheckBack() {

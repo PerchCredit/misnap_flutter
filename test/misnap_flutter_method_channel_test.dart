@@ -1,9 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:misnap_flutter/misnap_flutter_method_channel.dart';
 
 void main() {
-  MethodChannelMisnapFlutter platform = MethodChannelMisnapFlutter();
   const MethodChannel channel = MethodChannel('misnap_flutter');
 
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -16,9 +14,5 @@ void main() {
 
   tearDown(() {
     channel.setMockMethodCallHandler(null);
-  });
-
-  test('getPlatformVersion', () async {
-    expect(await platform.getPlatformVersion(), '42');
   });
 }

@@ -1,9 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:misnap_flutter/misnap_flutter.dart';
 
-class MiSnapCheckBackView extends StatefulWidget {
-  const MiSnapCheckBackView({
+class MiSnapRandomImageView extends StatefulWidget {
+  const MiSnapRandomImageView({
     Key? key,
     required this.width,
     required this.height,
@@ -13,20 +15,22 @@ class MiSnapCheckBackView extends StatefulWidget {
   final double height;
 
   @override
-  State<MiSnapCheckBackView> createState() => _CheckBackViewState();
+  State<MiSnapRandomImageView> createState() => _RandomImageViewState();
 }
 
-class _CheckBackViewState extends State<MiSnapCheckBackView> {
+class _RandomImageViewState extends State<MiSnapRandomImageView> {
+  Uint8List resultData = Uint8List.fromList([]);
+
   @override
   Widget build(BuildContext context) {
     if (defaultTargetPlatform != TargetPlatform.iOS &&
         defaultTargetPlatform != TargetPlatform.android) {
       throw UnsupportedError("Unsupported platform view");
     }
-    return _photoCheckBackView(defaultTargetPlatform == TargetPlatform.android);
+    return _randomImageView(defaultTargetPlatform == TargetPlatform.android);
   }
 
-  Widget _photoCheckBackView(bool isAndroid) {
+  Widget _randomImageView(bool isAndroid) {
     return SizedBox(
       height: widget.height,
       width: widget.width,
@@ -41,11 +45,21 @@ class _CheckBackViewState extends State<MiSnapCheckBackView> {
                   color: const Color.fromARGB(100, 204, 204, 204),
                 ),
               ),
-              child: Container()),
+              child: resultData.isNotEmpty
+                  ? Image.memory(
+                      resultData,
+                      fit: BoxFit.cover,
+                    )
+                  : const SizedBox(
+                      width: double.infinity,
+                      height: double.infinity,
+                    )),
           onTap: () {
-            MisnapFlutter()
-                .misnapCheckBack()
-                .then((value) => {print('object')});
+            MisnapFlutter().loadRandomImage().then((value) => {
+                  setState(() {
+                    resultData = value!;
+                  })
+                });
           },
         ),
       ),

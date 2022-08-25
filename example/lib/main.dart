@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:misnap_flutter/misnap_flutter.dart';
+import 'package:misnap_flutter/components/misnap_random_image_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,7 +27,7 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: const [
-            MiSnapCheckBackView(
+            MiSnapRandomImageView(
               width: 165.0,
               height: 116.0,
             )
