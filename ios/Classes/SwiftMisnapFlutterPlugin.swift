@@ -57,9 +57,8 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
         misnapVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         misnapVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         
-        let viewController: UIViewController =
-        (UIApplication.shared.delegate?.window??.rootViewController)!;
-        
+        let viewController = UIApplication.shared.windows.last?.rootViewController
+
         misnapVC.checkCameraPermission { granted in
             if !granted {
                 let message = "Camera permission is required to capture your documents."
@@ -68,7 +67,7 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
             }
             
             DispatchQueue.main.async {
-                viewController.present(misnapVC, animated: true)
+                viewController?.present(misnapVC, animated: true)
             }
         }
         
