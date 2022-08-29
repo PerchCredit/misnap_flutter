@@ -18,6 +18,8 @@ class _MyAppState extends State<MyApp> {
   late Uint8List resultRandomImage;
   late Uint8List resultCheckBackImage;
   late Uint8List resultIdCardBackImage;
+  late Uint8List resultPassportImage;
+  late Uint8List resultAnyIdImage;
 
   @override
   void initState() {
@@ -25,6 +27,8 @@ class _MyAppState extends State<MyApp> {
     resultRandomImage = Uint8List.fromList([]);
     resultCheckBackImage = Uint8List.fromList([]);
     resultIdCardBackImage = Uint8List.fromList([]);
+    resultPassportImage = Uint8List.fromList([]);
+    resultAnyIdImage = Uint8List.fromList([]);
   }
 
   @override
@@ -36,9 +40,11 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: [
-            _randomImageView(150.0, 150.0),
-            _miSnapCheckBack(150.0, 150.0),
-            _miSnapIdCardBack(150.0, 150.0),
+            _randomImageView(150.0, 100.0),
+            _miSnapCheckBack(150.0, 100.0),
+            _miSnapIdCardBack(150.0, 100.0),
+            _miSnapPassport(150.0, 100.0),
+            _miSnapAnyId(150.0, 100.0),
           ],
         ),
       ),
@@ -148,6 +154,80 @@ class _MyAppState extends State<MyApp> {
                   if (value != null && value.isNotEmpty)
                     setState(() {
                       resultIdCardBackImage = value;
+                    })
+                });
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _miSnapPassport(double width, double height) {
+    return SizedBox(
+      height: height,
+      width: width,
+      child: Align(
+        alignment: Alignment.center,
+        child: InkWell(
+          child: Container(
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(100, 245, 245, 245),
+                border: Border.all(
+                  width: 1,
+                  color: const Color.fromARGB(100, 204, 204, 204),
+                ),
+              ),
+              child: resultPassportImage.isNotEmpty
+                  ? Image.memory(
+                      resultPassportImage,
+                      fit: BoxFit.cover,
+                    )
+                  : const SizedBox(
+                      width: double.infinity,
+                      height: double.infinity,
+                    )),
+          onTap: () {
+            MisnapFlutter().misnapPassport().then((value) => {
+                  if (value != null && value.isNotEmpty)
+                    setState(() {
+                      resultPassportImage = value;
+                    })
+                });
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _miSnapAnyId(double width, double height) {
+    return SizedBox(
+      height: height,
+      width: width,
+      child: Align(
+        alignment: Alignment.center,
+        child: InkWell(
+          child: Container(
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(100, 245, 245, 245),
+                border: Border.all(
+                  width: 1,
+                  color: const Color.fromARGB(100, 204, 204, 204),
+                ),
+              ),
+              child: resultAnyIdImage.isNotEmpty
+                  ? Image.memory(
+                      resultAnyIdImage,
+                      fit: BoxFit.cover,
+                    )
+                  : const SizedBox(
+                      width: double.infinity,
+                      height: double.infinity,
+                    )),
+          onTap: () {
+            MisnapFlutter().misnapAnyId().then((value) => {
+                  if (value != null && value.isNotEmpty)
+                    setState(() {
+                      resultAnyIdImage = value;
                     })
                 });
           },

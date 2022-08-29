@@ -44,4 +44,12 @@ abstract class MisnapFlutterPlatform extends PlatformInterface {
   Future<Uint8List?> misnapIdCardFront() {
     throw UnimplementedError('misnapIdCardFront() has not been implemented.');
   }
+
+  Future<Uint8List?> misnapPassport() {
+    throw UnimplementedError('misnapPassport() has not been implemented.');
+  }
+
+  Future<Uint8List?> misnapAnyId() {
+    throw UnimplementedError('misnapAnyId() has not been implemented.');
+  }
 }

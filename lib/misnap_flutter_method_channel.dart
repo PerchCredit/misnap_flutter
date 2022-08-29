@@ -14,36 +14,38 @@ class MethodChannelMisnapFlutter extends MisnapFlutterPlatform {
 
   @override
   Future<Uint8List?> loadRandomImage() async {
-    final image = await methodChannel
+    return methodChannel
         .invokeMethod<Uint8List>(MiSnapPluginConfig.randomImage);
-    return image;
   }
 
   @override
   Future<Uint8List?> misnapCheckBack() async {
-    final image = await methodChannel
-        .invokeMethod<Uint8List>(MiSnapPluginConfig.checkBack);
-    return image;
+    return methodChannel.invokeMethod<Uint8List>(MiSnapPluginConfig.checkBack);
   }
 
   @override
   Future<Uint8List?> misnapCheckFront() async {
-    final image = await methodChannel
-        .invokeMethod<Uint8List>(MiSnapPluginConfig.checkFront);
-    return image;
+    return methodChannel.invokeMethod<Uint8List>(MiSnapPluginConfig.checkFront);
   }
 
   @override
   Future<Uint8List?> misnapIdCardBack() async {
-    final image = await methodChannel
-        .invokeMethod<Uint8List>(MiSnapPluginConfig.idCardBack);
-    return image;
+    return methodChannel.invokeMethod<Uint8List>(MiSnapPluginConfig.idCardBack);
   }
 
   @override
   Future<Uint8List?> misnapIdCardFront() async {
-    final image = await methodChannel
+    return methodChannel
         .invokeMethod<Uint8List>(MiSnapPluginConfig.idCardFront);
-    return image;
+  }
+
+  @override
+  Future<Uint8List?> misnapPassport() async {
+    return methodChannel.invokeMethod<Uint8List>(MiSnapPluginConfig.passport);
+  }
+
+  @override
+  Future<Uint8List?> misnapAnyId() async {
+    return methodChannel.invokeMethod<Uint8List>(MiSnapPluginConfig.anyId);
   }
 }

@@ -32,6 +32,16 @@ class MockMisnapFlutterPlatform
   Future<Uint8List?> misnapIdCardFront() {
     throw UnimplementedError();
   }
+
+  @override
+  Future<Uint8List?> misnapAnyId() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Uint8List?> misnapPassport() {
+    throw UnimplementedError();
+  }
 }
 
 void main() {

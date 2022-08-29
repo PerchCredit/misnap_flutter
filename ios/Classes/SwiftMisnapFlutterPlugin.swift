@@ -37,7 +37,17 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
             
             let configuration = MiSnapConfiguration(for: .idFront)
             self.setupMiSnapVC(configuration: configuration)
+
+        case "passport":
+            
+            let configuration = MiSnapConfiguration(for: .passport)
+            self.setupMiSnapVC(configuration: configuration)
                         
+        case "any_id":
+            
+            let configuration = MiSnapConfiguration(for: .anyId)
+            self.setupMiSnapVC(configuration: configuration)
+
         case "load_random_image":
             self.loadRandomImage()
             

@@ -22,4 +22,12 @@ class MisnapFlutter {
   Future<Uint8List?> misnapIdCardFront() async {
     return MisnapFlutterPlatform.instance.misnapIdCardFront();
   }
+
+  Future<Uint8List?> misnapPassport() async {
+    return MisnapFlutterPlatform.instance.misnapPassport();
+  }
+
+  Future<Uint8List?> misnapAnyId() async {
+    return MisnapFlutterPlatform.instance.misnapAnyId();
+  }
 }
