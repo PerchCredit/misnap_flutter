@@ -111,6 +111,9 @@ extension SwiftMisnapFlutterPlugin: MiSnapViewControllerDelegate {
     // Note, it will only be sent if `MiSnapLicenseStatus` is anything but `.valid`
     public func miSnapLicenseStatus(_ status: MiSnapLicenseStatus) {
         // Handle a license status here
+//        if status != .valid {
+//            self.result?(nil)
+//        }
     }
     
     public func miSnapSuccess(_ result: MiSnapResult) {
@@ -120,10 +123,12 @@ extension SwiftMisnapFlutterPlugin: MiSnapViewControllerDelegate {
     
     public func miSnapCancelled(_ result: MiSnapResult) {
         // Handle cancelled session results here
+        self.result?(nil)
     }
     
     public func miSnapException(_ exception: NSException) {
         // Handle exception that was caught by the SDK here
+        self.result?(nil)
     }
     
 }
