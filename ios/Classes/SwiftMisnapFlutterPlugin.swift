@@ -59,24 +59,26 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
         misnap.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         
         let viewController = UIApplication.shared.windows.last?.rootViewController
-
-        let minDiskSpace: Int = 20
-        if !misnap.hasMinDiskSpace(minDiskSpace) {
-            self.presentAlert(withTitle: "Not Enough Space", message: "Please, delete old/unused files to have at least \(minDiskSpace) MB of free space", viewController: viewController)
-            return
+        DispatchQueue.main.async {
+            viewController?.present(misnap, animated: true)
         }
+        // let minDiskSpace: Int = 20
+        // if !misnap.hasMinDiskSpace(minDiskSpace) {
+        //     self.presentAlert(withTitle: "Not Enough Space", message: "Please, delete old/unused files to have at least \(minDiskSpace) MB of free space", viewController: viewController)
+        //     return
+        // }
 
-        misnap.checkCameraPermission { granted in
-            if !granted {
-                let message = "Camera permission is required to capture your documents."
-                self.presentPermissionAlert(withTitle: "Camera Permission Denied", message: message, viewController: viewController)
-                return
-            }
+        // misnap.checkCameraPermission { granted in
+        //     if !granted {
+        //         let message = "Camera permission is required to capture your documents."
+        //         self.presentPermissionAlert(withTitle: "Camera Permission Denied", message: message, viewController: viewController)
+        //         return
+        //     }
             
-            DispatchQueue.main.async {
-                viewController?.present(misnap, animated: true)
-            }
-        }
+        //     DispatchQueue.main.async {
+        //         viewController?.present(misnap, animated: true)
+        //     }
+        // }
     }
     
     private func presentAlert(withTitle title: String?, message: String? = nil, viewController: UIViewController?) {
