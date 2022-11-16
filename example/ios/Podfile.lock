@@ -32,7 +32,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/misnap_flutter/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   MiSnap: 8915cfb803b839c9d5f985bcad298b2359d8024e
   misnap_flutter: bdee8404745277c54a695d761030013b7293bd57
   MiSnapAssetManager: a3650daeea15ce43d36716469537ee0e6cd5b8a2

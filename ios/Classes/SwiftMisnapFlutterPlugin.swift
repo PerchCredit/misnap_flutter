@@ -12,6 +12,8 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
         let channel = FlutterMethodChannel(name: "misnap_flutter", binaryMessenger: registrar.messenger())
         let instance = SwiftMisnapFlutterPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
+        
+        MiSnapLicenseManager.shared().setLicenseKey("your-license-key-here")
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -69,6 +71,12 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
         
         let viewController = UIApplication.shared.windows.last?.rootViewController
 
+        let minDiskSpace: Int = 20
+        if !misnapVC.hasMinDiskSpace(minDiskSpace) {
+            self.presentAlert(withTitle: "Not Enough Space", message: "Please, delete old/unused files to have at least \(minDiskSpace) MB of free space", viewController: viewController)
+            return
+        }
+
         misnapVC.checkCameraPermission { granted in
             if !granted {
                 let message = "Camera permission is required to capture your documents."
@@ -79,12 +87,6 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
             DispatchQueue.main.async {
                 viewController?.present(misnapVC, animated: true)
             }
-        }
-        
-        let minDiskSpace: Int = 20
-        if !misnapVC.hasMinDiskSpace(minDiskSpace) {
-            self.presentAlert(withTitle: "Not Enough Space", message: "Please, delete old/unused files to have at least \(minDiskSpace) MB of free space", viewController: viewController)
-            return
         }
         
         self.misnapVC = misnapVC
