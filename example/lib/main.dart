@@ -40,49 +40,11 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: [
-            _randomImageView(150.0, 100.0),
             _miSnapCheckBack(150.0, 100.0),
             _miSnapIdCardBack(150.0, 100.0),
             _miSnapPassport(150.0, 100.0),
             _miSnapAnyId(150.0, 100.0),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _randomImageView(double width, double height) {
-    return SizedBox(
-      height: height,
-      width: width,
-      child: Align(
-        alignment: Alignment.center,
-        child: InkWell(
-          child: Container(
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(100, 245, 245, 245),
-                border: Border.all(
-                  width: 1,
-                  color: const Color.fromARGB(100, 204, 204, 204),
-                ),
-              ),
-              child: resultRandomImage.isNotEmpty
-                  ? Image.memory(
-                      resultRandomImage,
-                      fit: BoxFit.cover,
-                    )
-                  : const SizedBox(
-                      width: double.infinity,
-                      height: double.infinity,
-                    )),
-          onTap: () {
-            MisnapFlutter().loadRandomImage().then((value) => {
-                  if (value != null && value.isNotEmpty)
-                    setState(() {
-                      resultRandomImage = value;
-                    })
-                });
-          },
         ),
       ),
     );

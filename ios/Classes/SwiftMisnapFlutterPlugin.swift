@@ -5,7 +5,6 @@ import MiSnapUX
 
 public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
     
-    private var misnapVC: MiSnapViewController?
     private var result: FlutterResult?
     
     public static func register(with registrar: FlutterPluginRegistrar) {
@@ -21,63 +20,53 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
         self.result = result
         switch call.method {
         case "check_back":
-            
             let configuration = MiSnapConfiguration(for: .checkBack)
-            self.setupMiSnapVC(configuration: configuration)
-            
+            let misnapVC = MiSnapViewController(with: configuration, delegate: self)
+            self.presentMiSnap(misnapVC)
+            break
         case "check_front":
-            
             let configuration = MiSnapConfiguration(for: .checkFront)
-            self.setupMiSnapVC(configuration: configuration)
-            
+            let misnapVC = MiSnapViewController(with: configuration, delegate: self)
+            self.presentMiSnap(misnapVC)
+            break
         case "id_card_back":
-            
             let configuration = MiSnapConfiguration(for: .idBack)
-            self.setupMiSnapVC(configuration: configuration)
-            
+            let misnapVC = MiSnapViewController(with: configuration, delegate: self)
+            self.presentMiSnap(misnapVC)
+            break
         case "id_card_front":
-            
             let configuration = MiSnapConfiguration(for: .idFront)
-            self.setupMiSnapVC(configuration: configuration)
-
+            let misnapVC = MiSnapViewController(with: configuration, delegate: self)
+            self.presentMiSnap(misnapVC)
+            break
         case "passport":
-            
             let configuration = MiSnapConfiguration(for: .passport)
-            self.setupMiSnapVC(configuration: configuration)
-                        
-        case "any_id":
-            
-            let configuration = MiSnapConfiguration(for: .anyId)
-            self.setupMiSnapVC(configuration: configuration)
-
-        case "load_random_image":
-            self.loadRandomImage()
-            
+            let misnapVC = MiSnapViewController(with: configuration, delegate: self)
+            self.presentMiSnap(misnapVC)
+            break
         default:
-            result(nil)
+            let configuration = MiSnapConfiguration(for: .generic)
+            let misnapVC = MiSnapViewController(with: configuration, delegate: self)
+            self.presentMiSnap(misnapVC)
+            break
         }
     }
-    
-    private func loadRandomImage() {
-        let url = URL(string: "https://picsum.photos/200/300")
-        let data = NSData(contentsOf: url!)
-        self.result?(data)
-    }
-    
-    private func setupMiSnapVC(configuration :MiSnapConfiguration) {
-        let misnapVC = MiSnapViewController(with: configuration, delegate: self)
-        misnapVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        misnapVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+        
+    private func presentMiSnap(_ misnap: MiSnapViewController?) {
+        guard let misnap = misnap else { return }
+        
+        misnap.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        misnap.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         
         let viewController = UIApplication.shared.windows.last?.rootViewController
 
         let minDiskSpace: Int = 20
-        if !misnapVC.hasMinDiskSpace(minDiskSpace) {
+        if !misnap.hasMinDiskSpace(minDiskSpace) {
             self.presentAlert(withTitle: "Not Enough Space", message: "Please, delete old/unused files to have at least \(minDiskSpace) MB of free space", viewController: viewController)
             return
         }
 
-        misnapVC.checkCameraPermission { granted in
+        misnap.checkCameraPermission { granted in
             if !granted {
                 let message = "Camera permission is required to capture your documents."
                 self.presentPermissionAlert(withTitle: "Camera Permission Denied", message: message, viewController: viewController)
@@ -85,11 +74,9 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
             }
             
             DispatchQueue.main.async {
-                viewController?.present(misnapVC, animated: true)
+                viewController?.present(misnap, animated: true)
             }
         }
-        
-        self.misnapVC = misnapVC
     }
     
     private func presentAlert(withTitle title: String?, message: String? = nil, viewController: UIViewController?) {
