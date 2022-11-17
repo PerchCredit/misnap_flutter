@@ -59,26 +59,63 @@ public class SwiftMisnapFlutterPlugin: NSObject, FlutterPlugin {
         misnap.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         
         let viewController = UIApplication.shared.windows.last?.rootViewController
-        DispatchQueue.main.async {
-            viewController?.present(misnap, animated: true)
+        
+        // Check diskspace
+        let minDiskSpace: Int = 20
+        if freeDiskSpaceInBytes < minDiskSpace {
+            self.presentAlert(withTitle: "Not Enough Space", message: "Please, delete old/unused files to have at least \(minDiskSpace) MB of free space", viewController: viewController)
+            return
         }
-        // let minDiskSpace: Int = 20
-        // if !misnap.hasMinDiskSpace(minDiskSpace) {
-        //     self.presentAlert(withTitle: "Not Enough Space", message: "Please, delete old/unused files to have at least \(minDiskSpace) MB of free space", viewController: viewController)
-        //     return
-        // }
-
-        // misnap.checkCameraPermission { granted in
-        //     if !granted {
-        //         let message = "Camera permission is required to capture your documents."
-        //         self.presentPermissionAlert(withTitle: "Camera Permission Denied", message: message, viewController: viewController)
-        //         return
-        //     }
-            
-        //     DispatchQueue.main.async {
-        //         viewController?.present(misnap, animated: true)
-        //     }
-        // }
+        
+        // Check camera permission
+        let cameraAuthorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        switch cameraAuthorizationStatus {
+            case .notDetermined:
+                AVCaptureDevice.requestAccess(for: .video, completionHandler: {accessGranted in
+                    guard accessGranted == true else { return }
+                    DispatchQueue.main.async {
+                        viewController?.present(misnap, animated: true)
+                    }
+                })
+                break
+            case .authorized:
+                viewController?.present(misnap, animated: true)
+                break
+            case .restricted, .denied:
+                alertCameraAccessNeeded(viewController: viewController)
+                break
+            default:
+                break
+        }
+    }
+    
+    //MARK: Get Disk Space
+    
+    /*
+     Total available capacity in bytes for "Important" resources, including space expected to be cleared by purging non-essential and cached resources. "Important" means something that the user or application clearly expects to be present on the local system, but is ultimately replaceable. This would include items that the user has explicitly requested via the UI, and resources that an application requires in order to provide functionality.
+     Examples: A video that the user has explicitly requested to watch but has not yet finished watching or an audio file that the user has requested to download.
+     This value should not be used in determining if there is room for an irreplaceable resource. In the case of irreplaceable resources, always attempt to save the resource regardless of available capacity and handle failure as gracefully as possible.
+     */
+    var freeDiskSpaceInBytes:Int64 {
+        if #available(iOS 11.0, *) {
+            if let space = try? URL(fileURLWithPath: NSHomeDirectory() as String).resourceValues(forKeys: [URLResourceKey.volumeAvailableCapacityForImportantUsageKey]).volumeAvailableCapacityForImportantUsage {
+                return space ?? 0
+            } else {
+                return 0
+            }
+        } else {
+            if let systemAttributes = try? FileManager.default.attributesOfFileSystem(forPath: NSHomeDirectory() as String),
+            let freeSpace = (systemAttributes[FileAttributeKey.systemFreeSize] as? NSNumber)?.int64Value {
+                return freeSpace
+            } else {
+                return 0
+            }
+        }
+    }
+    
+    private func alertCameraAccessNeeded(viewController: UIViewController?) {
+        let message = "Camera permission is required to capture your documents."
+        self.presentPermissionAlert(withTitle: "Camera Permission Denied", message: message, viewController: viewController)
     }
     
     private func presentAlert(withTitle title: String?, message: String? = nil, viewController: UIViewController?) {
